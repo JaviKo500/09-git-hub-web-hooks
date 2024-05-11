@@ -12,10 +12,8 @@ export class GitHubController {
 
    webhookHandler = ( req: Request, res: Response ) => {
       const githubEvent = req.header('x-github-event') ?? 'unknown';
-      const signature = req.header('x-hub-signature-256') ?? 'unknown';
       const payload = req.body;
 
-      console.log(signature);
       let message: string = '';
       switch (githubEvent) {
          case 'star':
@@ -25,11 +23,9 @@ export class GitHubController {
             message = this.gitHubService.onIssues( payload );
             break;
          default:
-            console.log('<--------------- JK Controller --------------->');
             console.log(`unknown: ${githubEvent}`);
             break;
       }
-      console.log('<--------------- JK Controller --------------->');
       console.log({message});
       if ( message ) {
          this.discordService.notify(message)
