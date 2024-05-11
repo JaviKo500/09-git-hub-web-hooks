@@ -28,7 +28,7 @@ export class GitHubController {
             break;
       }
       console.log('<--------------- JK Controller --------------->');
-      console.log(message);
+      console.log({message});
       res.status(202).json({
         msg: 'accepted',
       });
