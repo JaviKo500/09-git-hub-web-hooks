@@ -1,14 +1,15 @@
 import express from 'express';
 import { envs } from './config';
 import { GitHubController } from './presentation/github/controller';
+import { GitHubService } from './presentation/services/git-hub.service';
 (() => {
    main();
 })();
 
 function main() {
    const app = express();
-
-   const controller = new GitHubController();
+   const gitHubService = new GitHubService();
+   const controller = new GitHubController( gitHubService );
 
    app.use( express.json() );
 
