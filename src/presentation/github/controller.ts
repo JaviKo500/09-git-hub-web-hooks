@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
 import { GitHubService } from '../services/git-hub.service';
+import { DiscordService } from "../services/discord.service";
 
 export class GitHubController {
    constructor(
-      private readonly gitHubService:GitHubService
+      private readonly gitHubService:GitHubService,
+      private readonly discordService:DiscordService
    ) {
       
    }
@@ -29,8 +31,13 @@ export class GitHubController {
       }
       console.log('<--------------- JK Controller --------------->');
       console.log({message});
-      res.status(202).json({
-        msg: 'accepted',
-      });
+      if ( message ) {
+         this.discordService.notify(message)
+            .then( () => res.status(202).json({
+                  msg: 'accepted',
+               })
+            )
+            .catch( () => res.status(500).json({ err: 'Internal server error' }) );
+      }
    }
 }
