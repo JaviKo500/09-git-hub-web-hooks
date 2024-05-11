@@ -1,4 +1,4 @@
-export interface GitHubPayloadPayload {
+export interface GitHubIssuePayload {
    action?:     string;
    issue?:      Issue;
    repository?: Repository;
